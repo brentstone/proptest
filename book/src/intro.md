@@ -10,11 +10,9 @@ makes it more flexible and simplifies composition.
 
 ## Status of this crate
 
-The majority of the functionality offered by proptest is in active use and
-is known to work well.
-
-The API is unlikely to see drastic breaking changes, but there may still be
-minor breaking changes here and there, though this is becoming less common.
+The crate is fairly close to being feature-complete and has not seen
+substantial architectural changes in quite some time. At this point, it mainly
+sees passive maintenance.
 
 See the [changelog](https://github.com/AltSysrq/proptest/blob/master/proptest/CHANGELOG.md)
 for a full list of substantial historical changes, breaking and otherwise.
@@ -26,7 +24,7 @@ properties of its output or behaviour are fulfilled for all inputs. These
 inputs are generated automatically, and, critically, when a failing input
 is found, the input is automatically reduced to a _minimal_ test case.
 
-Property testing is best used to compliment traditional unit testing (i.e.,
+Property testing is best used to complement traditional unit testing (i.e.,
 using specific inputs chosen by hand). Traditional tests can test specific
 known edge cases, simple inputs, and inputs that were known in the past to
 reveal bugs, whereas property tests will search for more complicated inputs
