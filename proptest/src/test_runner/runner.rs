@@ -606,16 +606,26 @@ impl TestRunner {
                 &mut *result_cache,
                 &mut fork_output,
             );
+            if result.is_err() {
+                use crate::std::string::ToString;
+                println!("seed {}", PersistedSeed(seed.clone()).to_string());
+                println!("RUNNER: test error");
+            }
+            if let Err(TestError::Abort(_)) = &result {
+                println!("RUNNER: test error is Abort");
+            }
             if let Err(TestError::Fail(_, ref value)) = result {
                 if let Some(ref mut failure_persistence) =
                     self.config.failure_persistence
                 {
                     let source_file = &self.config.source_file;
 
+                    println!("RUNNER: test error is Fail");
                     // Don't update the persistence file if we're a child
                     // process. The parent relies on it remaining consistent
                     // and will take care of updating it itself.
                     if !fork_output.is_in_fork() {
+                        println!("RUNNER: test error is not in a fork");
                         failure_persistence.save_persisted_failure2(
                             *source_file,
                             PersistedSeed(seed),
