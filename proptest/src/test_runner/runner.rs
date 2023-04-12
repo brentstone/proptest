@@ -599,6 +599,10 @@ impl TestRunner {
             // Generate a new seed and make an RNG from that so that we know
             // what seed to persist if this case fails.
             let seed = self.rng.gen_get_seed();
+            use crate::std::string::ToString;
+
+            println!("seed {}", PersistedSeed(seed.clone()).to_string());
+
             let result = self.gen_and_run_case(
                 strategy,
                 &test,
