@@ -269,18 +269,26 @@ where
     result_cache.put(cache_key, &result);
     fork_output.append(&result);
 
+    let seed = runner.rng.gen_get_seed();
+    use crate::std::string::ToString;
+
+    let seed_str = PersistedSeed(seed.clone()).to_string();
+    println!("\nSeed {}\n", seed_str);
+
     match result {
         Ok(()) => verbose_message!(runner, TRACE, "Test case passed"),
         Err(TestCaseError::Reject(ref reason)) => verbose_message!(
             runner,
             SHOW_FALURES,
-            "Test case rejected: {}",
+            "Test case rejected with seed ({}): {}",
+            seed_str,
             reason
         ),
         Err(TestCaseError::Fail(ref reason)) => verbose_message!(
             runner,
             SHOW_FALURES,
-            "Test case failed: {}",
+            "Test case failed with seed ({}): {}",
+            seed_str,
             reason
         ),
     }
